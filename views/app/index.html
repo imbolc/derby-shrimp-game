@@ -1,47 +1,4 @@
+<import: src="game">
+
 <Header:>
   <h1>Shrimp Game</h1>
-
-<Body:>
-  <br>Game: {_page.game.id}, You are Player {_page.playerNumber}.
-  {#if equal(_page.game.players.length, 3)}
-    {#if equal(_page.game.round.quantity[_page.user.id], undefined)}
-      <br><input type="text" placeholder="quantity" value="{_page.quantity}">
-      <button x-bind="click: submitQuantity" type="submit" class="pure-button pure-button-primary">confirm</button>
-    {else}
-      <p>Waiting for other players ...</p>
-    {/}
-
-    <h2>Rounds</h2>
-    <table class="pure-table">
-      <thead>
-        <tr>
-          <th>Q1</th>
-          <th>Q2</th>
-          <th>Q3</th>
-          <th>Price</th>
-          <th>П1</th>
-          <th>П2</th>
-          <th>П3</th>
-        </tr>
-      </thead>
-      {#each _page.game.history}
-        <tr>
-          <td>{.quantity[_page.game.players[0]]}</td>
-          <td>{.quantity[_page.game.players[1]]}</td>
-          <td>{.quantity[_page.game.players[2]]}</td>
-
-          <td>{.price}</td>
-
-          <td>{.profit[_page.game.players[0]]}</td>
-          <td>{.profit[_page.game.players[1]]}</td>
-          <td>{.profit[_page.game.players[2]]}</td>
-        </tr>
-      {/}
-    </table>
-
-  {else}
-    <p>Waiting for signing players ...</p>
-  {/}
-
-
-

@@ -1,0 +1,89 @@
+<Body:>
+  {#if equal(_page.game.players.length, 3)}
+
+
+    {#if equal(_page.game.history.length, 8)}
+      {#if isMeWinner(_page.user, _page.game)}
+        <h2>Congratulations, Player {_page.playerNumber}, you won!</h2>
+      { else }
+        <h2>Game over! You are  Player {_page.playerNumber}.</h2>
+      {/}
+      <a href="/" class="pure-button pure-button-primary">Start New Game</a>
+
+    {else}
+      <h2>Round {getCurrentRound(_page.game)}. You are  Player {_page.playerNumber}.</h2>
+
+      {#if isQuantitySubmitted(_page.user, _page.game)}
+        <p>Waiting for other players ...</p>
+
+      {else}
+            Quantity:
+            &nbsp;<input type="range" min="0" max="75" value="{_page.quantity}">
+            &nbsp;<input type="text" readonly size="2" value="{_page.quantity}">
+            &nbsp;<button x-bind="click: submitQuantity" type="submit" class="pure-button pure-button-primary">confirm</button>
+      {/}
+    {/}
+
+    <div class="pure-g-r">
+      <div class="pure-u-1-3">
+        <table class="pure-table">
+          <caption>Total Profit</caption>
+          <thead>
+            <tr>
+              <th>Player 1</th>
+              <th>Player 2</th>
+              <th>Player 3</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              {#each _page.game.players}
+                <td>{toFixed(_page.game.totalProfit[.])}</td>
+              {/}
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="pure-u-2-3">
+        <table class="pure-table">
+          <caption>Rounds</caption>
+          <thead>
+            <tr>
+              <th></th>
+              <th>Q1</th>
+              <th>Q2</th>
+              <th>Q3</th>
+              <th>Price</th>
+              <th>П1</th>
+              <th>П2</th>
+              <th>П3</th>
+            </tr>
+          </thead>
+          {#each _page.game.history as :round}
+            <tr>
+              <td>{.num}</td>
+
+              {#each _page.game.players}
+                <td>{toFixed(:round.quantity[.])}</td>
+              {/}
+
+              <td>{toFixed(.price)}</td>
+
+              {#each _page.game.players}
+                <td>{toFixed(:round.profit[.])}</td>
+              {/}
+            </tr>
+          {/}
+        </table>
+      </div>
+
+    </div>
+
+
+  {else}
+    <p>Waiting for signing players ...</p>
+  {/}
+
+
+
